@@ -12,7 +12,7 @@ function App() {
 			isChecked: false,
 		};
 
-		let items = [...list, item];
+		const items = [...list, item];
 
 		setList(items);
 
