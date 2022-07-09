@@ -1,59 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Form from './components/Form';
+import List from './components/List';
 
 function App() {
-	const [value, setValue] = useState('');
 	const [list, setList] = useState([]);
 
-	const onSubmit = (e) => {
-		e.preventDefault();
+	const onForm = (value) => {
+		const item = {
+			id: Date.now(),
+			value: value.trim(),
+			isChecked: false,
+		};
 
-		if (value.trim() === '') {
-			setValue('');
-			return alert('내용을 입력하세요');
+		let items = [...list, item];
+
+		setList(items);
+
+		localStorage.setItem('todos', JSON.stringify(items));
+	};
+
+	const onToggle = (id) => {
+		setList((prevList) => {
+			const itemIndex = prevList.findIndex((index) => index.id === id);
+			console.log(itemIndex);
+			return [...prevList];
+		});
+	};
+
+	useEffect(() => {
+		const data = localStorage.getItem('todos');
+		console.log(JSON.parse(data));
+		if (data) {
+			setList(JSON.parse(data));
 		}
-
-		setList([
-			...list,
-			{
-				value: value.trim(),
-				isChecked: false,
-			},
-		]);
-
-		setValue('');
-	};
-
-	const onChange = (e) => {
-		setValue(e.target.value);
-	};
-
-	const onClick = (id) => {
-		setList(
-			list.map((item, index) =>
-				id === index ? { ...item, isChecked: !item.isChecked } : item,
-			),
-		);
-	};
+	}, []);
 
 	return (
 		<div className='App'>
-			<form onSubmit={onSubmit}>
-				<input type='text' value={value} onChange={onChange} />
-				<button>등록</button>
-			</form>
-			<ul>
-				{list.map((item, index) => (
-					<li
-						key={index}
-						onClick={() => onClick(index)}
-						style={{
-							textDecoration: `${item.isChecked ? 'line-through' : 'none'}`,
-						}}
-					>
-						{item.value}
-					</li>
-				))}
-			</ul>
+			<Form onForm={onForm} />
+			<List list={list} onToggle={onToggle} />
 		</div>
 	);
 }

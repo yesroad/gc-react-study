@@ -20,3 +20,13 @@
 3. **useRef**
 4. **useContext**
 5. **useEffect**
+
+---
+## 2주차
+
+- useEffect
+  - 사용방법 4가지
+    - deps가 없는 effect
+    - deps가 있는 effect
+
+
