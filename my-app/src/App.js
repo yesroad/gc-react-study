@@ -21,9 +21,18 @@ function App() {
 
 	const onToggle = (id) => {
 		setList((prevList) => {
+			const todos = [...list];
 			const itemIndex = prevList.findIndex((index) => index.id === id);
-			console.log(itemIndex);
-			return [...prevList];
+			const item = prevList[itemIndex];
+
+			todos[itemIndex] = {
+				...item,
+				isChecked: !item.isChecked,
+			};
+
+			localStorage.setItem('todos', JSON.stringify(todos));
+
+			return todos;
 		});
 	};
 
