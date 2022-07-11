@@ -1,9 +1,9 @@
 function List({ list, onToggle }) {
 	return (
 		<ul>
-			{list?.map((item, index) => (
+			{list?.map((item) => (
 				<li
-					key={index}
+					key={item.id}
 					onClick={() => onToggle(item.id)}
 					style={{
 						textDecoration: `${item.isChecked ? 'line-through' : 'none'}`,
