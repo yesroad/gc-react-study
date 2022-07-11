@@ -38,7 +38,6 @@ function App() {
 
 	useEffect(() => {
 		const data = localStorage.getItem('todos');
-		console.log(JSON.parse(data));
 		if (data) {
 			setList(JSON.parse(data));
 		}
