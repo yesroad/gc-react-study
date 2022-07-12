@@ -1,4 +1,4 @@
-function List({ list, onToggle, onEdit }) {
+function List({ list, onClick, onEdit }) {
 	return (
 		<ul>
 			{list?.map((item) => (
@@ -8,8 +8,8 @@ function List({ list, onToggle, onEdit }) {
 						textDecoration: `${item.isChecked ? 'line-through' : 'none'}`,
 					}}
 				>
-					<span onClick={() => onToggle(item.id)}>{item.value}</span>
-					<button onClick={() => onEdit(item.id)}>수정</button>
+					<span onClick={() => onClick(item.id, 'toggle')}>{item.value}</span>
+					<button onClick={() => onClick(item.id, 'edit')}>수정</button>
 				</li>
 			))}
 		</ul>

@@ -19,7 +19,10 @@ function TodoList() {
 		localStorage.setItem('todos', JSON.stringify(items));
 	};
 
-	const onToggle = (id) => {
+	const onClick = (id, type) => {
+		const editValue = '';
+		const editMessage = type === 'edit' && prompt('변경할 값 입력', editValue);
+
 		setList((prevList) => {
 			const todos = [...list];
 			const itemIndex = prevList.findIndex((index) => index.id === id);
@@ -27,34 +30,14 @@ function TodoList() {
 
 			todos[itemIndex] = {
 				...item,
-				isChecked: !item.isChecked,
+				isChecked: type === 'toggle' ? !item.isChecked : item.isChecked,
+				value: type === 'edit' ? editMessage : item.value,
 			};
 
 			localStorage.setItem('todos', JSON.stringify(todos));
 
 			return todos;
 		});
-	};
-
-	const onEdit = (id) => {
-		const editValue = '';
-		const editMessage = prompt('변경할 값 입력', editValue);
-		if (alert) {
-			setList((prevList) => {
-				const todos = [...list];
-				const itemIndex = prevList.findIndex((index) => index.id === id);
-				const item = prevList[itemIndex];
-
-				todos[itemIndex] = {
-					...item,
-					value: editMessage.trim(),
-				};
-
-				localStorage.setItem('todos', JSON.stringify(todos));
-
-				return todos;
-			});
-		}
 	};
 
 	useEffect(() => {
@@ -67,7 +50,7 @@ function TodoList() {
 	return (
 		<div className='App'>
 			<Form onForm={onForm} />
-			<List list={list} onToggle={onToggle} onEdit={onEdit} />
+			<List list={list} onClick={onClick} />
 		</div>
 	);
 }
