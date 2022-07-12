@@ -28,11 +28,17 @@ function TodoList() {
 			const itemIndex = prevList.findIndex((index) => index.id === id);
 			const item = prevList[itemIndex];
 
-			todos[itemIndex] = {
+			const toggleItem = {
 				...item,
-				isChecked: isEdit ? item.isChecked : !item.isChecked,
-				value: isEdit && editMessage ? editMessage : item.value,
+				isChecked: !item.isChecked,
 			};
+
+			const editItem = {
+				...item,
+				value: editMessage,
+			};
+
+			todos[itemIndex] = isEdit ? editItem : toggleItem;
 
 			localStorage.setItem('todos', JSON.stringify(todos));
 
