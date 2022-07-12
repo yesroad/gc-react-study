@@ -20,8 +20,8 @@ function TodoList() {
 	};
 
 	const onClick = (id, type) => {
-		const editValue = '';
-		const editMessage = type === 'edit' && prompt('변경할 값 입력', editValue);
+		const isEdit = type === 'edit';
+		const editMessage = isEdit && prompt('변경할 값 입력', '');
 
 		setList((prevList) => {
 			const todos = [...list];
@@ -30,8 +30,8 @@ function TodoList() {
 
 			todos[itemIndex] = {
 				...item,
-				isChecked: type === 'toggle' ? !item.isChecked : item.isChecked,
-				value: type === 'edit' ? editMessage : item.value,
+				isChecked: isEdit ? item.isChecked : !item.isChecked,
+				value: isEdit && editMessage ? editMessage : item.value,
 			};
 
 			localStorage.setItem('todos', JSON.stringify(todos));
