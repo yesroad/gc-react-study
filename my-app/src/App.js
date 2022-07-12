@@ -1,9 +1,9 @@
-import Refs from './20220712/study';
+import TodoList from './20220712/todo';
 
 function App() {
 	return (
 		<div className='App'>
-			<Refs />
+			<TodoList />
 		</div>
 	);
 }
