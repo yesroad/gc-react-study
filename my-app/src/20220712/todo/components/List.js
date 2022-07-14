@@ -1,4 +1,4 @@
-function List({ list, onClick, onEdit }) {
+function List({ list, onClick }) {
 	return (
 		<ul>
 			{list?.map((item) => (

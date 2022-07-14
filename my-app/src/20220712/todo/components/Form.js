@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 function Form({ onForm }) {
 	const [value, setValue] = useState('');
 	const inputRef = useRef(null);
+
 	const onSubmit = (e) => {
 		e.preventDefault();
 

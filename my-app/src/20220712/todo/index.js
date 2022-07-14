@@ -35,7 +35,7 @@ function TodoList() {
 
 			const editItem = {
 				...item,
-				value: editMessage,
+				value: editMessage ? editMessage : item.value,
 			};
 
 			todos[itemIndex] = isEdit ? editItem : toggleItem;
