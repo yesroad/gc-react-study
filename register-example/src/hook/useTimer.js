@@ -1,11 +1,5 @@
 import { useEffect, useRef, useReducer } from 'react';
-import { reducer } from '../reducer';
-
-const initialState = {
-	time: 0,
-	min: 3,
-	sec: '00',
-};
+import reducer, { initialState } from '../reducer';
 
 function useTimer() {
 	const timeRef = useRef(180);
@@ -28,7 +22,7 @@ function useTimer() {
 		}
 	}, [time]);
 
-	return [state];
+	return [state.timer];
 }
 
 export default useTimer;

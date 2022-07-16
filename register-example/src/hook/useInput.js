@@ -1,11 +1,6 @@
 import { useReducer } from 'react';
-import { reducer } from '../reducer';
+import reducer, { initialState } from '../reducer';
 
-const initialState = {
-	id: '',
-	password: '',
-	phone: '',
-};
 
 function useInput() {
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -19,7 +14,7 @@ function useInput() {
 		});
 	};
 
-	return [state, onChange];
+	return [state.inputs, onChange];
 }
 
 export default useInput;

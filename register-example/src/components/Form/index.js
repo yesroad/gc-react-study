@@ -1,15 +1,11 @@
 import { useRef, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { reducer } from '../../reducer';
+import reducer, { initialState } from '../../reducer';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import useInput from '../../hook/useInput';
 import Timer from '../Timer';
 
-const initialState = {
-	visible: false,
-	certified: false,
-};
 
 function Form({ isRegister }) {
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -85,15 +81,6 @@ function Form({ isRegister }) {
 		return navigate('/');
 	};
 
-	const onSetVisible = (count) => {
-		if (count <= 0) {
-			dispatch({
-				type: 'CHANGE_VISIBLE',
-				certified: false,
-			});
-		}
-	};
-
 	return (
 		<form onSubmit={isRegister ? onRegister : onLogin}>
 			<Input title='아이디' name='id' value={input.id} onChange={onChange} />
@@ -117,7 +104,7 @@ function Form({ isRegister }) {
 								onChange={onChange}
 							/>
 							<Button text='인증번호 확인' onClick={onCertified} />
-							<Timer onSetVisible={onSetVisible} />
+							<Timer />
 						</>
 					)
 				) : (

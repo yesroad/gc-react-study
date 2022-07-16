@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import useTimer from '../../hook/useTimer';
+import reducer, { initialState } from '../../reducer';
 
-function Timer({ onSetVisible }) {
+function Timer() {
+	const [, dispatch] = useReducer(reducer, initialState);
 	const [time] = useTimer();
 
 	useEffect(() => {
-		onSetVisible(time.count);
-	}, [onSetVisible, time]);
+		if (time <= 0) {
+			dispatch({
+				type: 'CHANGE_VISIBLE',
+				certified: false,
+			});
+		}
+	}, [time]);
 
 	return (
 		<div>

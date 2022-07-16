@@ -1,16 +1,37 @@
-export function reducer(state, action) {
+export const initialState = {
+	inputs: {
+		id: '',
+		password: '',
+		phone: '',
+	},
+	timer: {
+		count: 0,
+		min: 3,
+		sec: '00',
+	},
+	visible: false,
+	certified: false,
+}
+
+function reducer(state, action) {
 	switch (action.type) {
 		case 'CHANGE_INPUT':
 			return {
 				...state,
-				[action.name]: action.value,
+				inputs: {
+					...state.inputs,
+					[action.name]: action.value,
+				}
 			};
 		case 'CHANGE_TIMER':
 			return {
 				...state,
-				count: action.count,
-				min: action.min,
-				sec: action.sec,
+				timer: {
+					...state.timer,
+					count: action.count,
+					min: action.min,
+					sec: action.sec,
+				}
 			};
 		case 'CHANGE_VISIBLE':
 			return {
@@ -26,3 +47,5 @@ export function reducer(state, action) {
 			return state;
 	}
 }
+
+export default reducer;
