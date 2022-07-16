@@ -49,7 +49,13 @@ function Form({ isRegister }) {
 	// 로그인
 	const onLogin = (e) => {
 		e.preventDefault();
-		const data = JSON.parse(localStorage.getItem('auth'));
+
+		const initialState = {
+			id: null,
+			password: null,
+		};
+
+		const data = JSON.parse(localStorage.getItem('auth')) || initialState;
 
 		if (data.id !== state.id) {
 			return alert('아이디를 확인하세요');

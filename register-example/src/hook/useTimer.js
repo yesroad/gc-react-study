@@ -8,7 +8,7 @@ const initialState = {
 };
 
 function useTimer() {
-	const timeRef = useRef(10);
+	const timeRef = useRef(180);
 	let time = timeRef.current;
 
 	const [state, dispatch] = useReducer(reducer, initialState);
