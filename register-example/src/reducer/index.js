@@ -12,6 +12,16 @@ export function reducer(state, action) {
 				min: action.min,
 				sec: action.sec,
 			};
+		case 'CHANGE_VISIBLE':
+			return {
+				...state,
+				visible: action,
+			};
+		case 'CHANGE_CERTIFIED':
+			return {
+				...state,
+				certified: action,
+			};
 		default:
 			return state;
 	}

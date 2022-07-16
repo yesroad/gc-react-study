@@ -1,14 +1,19 @@
-import { useRef, useState } from 'react';
+import { useRef, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { reducer } from '../../reducer';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import useInput from '../../hook/useInput';
 import Timer from '../Timer';
 
+const initialState = {
+	visible: false,
+	certified: false,
+};
+
 function Form({ isRegister }) {
-	const [isVisible, setIsVisible] = useState(false);
-	const [isCertified, setIsCertified] = useState(false);
-	const [state, onChange] = useInput();
+	const [state, dispatch] = useReducer(reducer, initialState);
+	const [input, onChange] = useInput();
 
 	const navigate = useNavigate();
 
@@ -17,18 +22,25 @@ function Form({ isRegister }) {
 
 	// 인증번호 인풋 활성화
 	const onVisible = () => {
-		setIsVisible(!isVisible);
+		dispatch({
+			type: 'CHANGE_VISIBLE',
+			visible: true,
+		});
 		alert(`인증번호 : ${random.current}`);
 	};
 
 	// 인증번호 확인
 	const onCertified = (e) => {
 		e.preventDefault();
-		if (Number(state.phone) !== random.current) {
+		if (Number(input.phone) !== random.current) {
 			return alert('인증번호를 다시 확인하여주세요.');
 		}
 
-		setIsCertified(!isCertified);
+		dispatch({
+			type: 'CHANGE_CERTIFIED',
+			certified: true,
+		});
+
 		return alert('인증되었습니다.');
 	};
 
@@ -36,11 +48,15 @@ function Form({ isRegister }) {
 	const onRegister = (e) => {
 		e.preventDefault();
 
-		if (!isCertified) {
+		if (!input.id || !input.password) {
+			return alert('빈칸을 모두 입력하세요.');
+		}
+
+		if (!state.certified) {
 			return alert('인증을 완료하세요.');
 		}
 
-		localStorage.setItem('auth', JSON.stringify(state));
+		localStorage.setItem('auth', JSON.stringify(input));
 
 		alert('회원가입이 완료되었습니다.');
 		return navigate('/login');
@@ -57,11 +73,11 @@ function Form({ isRegister }) {
 
 		const data = JSON.parse(localStorage.getItem('auth')) || initialState;
 
-		if (data.id !== state.id) {
+		if (data.id !== input.id) {
 			return alert('아이디를 확인하세요');
 		}
 
-		if (data.password !== state.password) {
+		if (data.password !== input.password) {
 			return alert('비밀번호를 확인하세요.');
 		}
 		alert('로그인이 완료되었습니다.');
@@ -71,30 +87,33 @@ function Form({ isRegister }) {
 
 	const onSetVisible = (count) => {
 		if (count <= 0) {
-			setIsVisible(false);
+			dispatch({
+				type: 'CHANGE_VISIBLE',
+				certified: false,
+			});
 		}
 	};
 
 	return (
 		<form onSubmit={isRegister ? onRegister : onLogin}>
-			<Input title='아이디' name='id' value={state.id} onChange={onChange} />
+			<Input title='아이디' name='id' value={input.id} onChange={onChange} />
 			<Input
 				title='비밀번호'
 				type='password'
 				name='password'
-				value={state.password}
+				value={input.password}
 				onChange={onChange}
 			/>
 			{isRegister &&
-				(isVisible ? (
-					isCertified ? (
+				(state.visible ? (
+					state.certified ? (
 						<strong>인증완료</strong>
 					) : (
 						<>
 							<Input
 								title='인증번호 입력'
 								name='phone'
-								value={state.phone}
+								value={input.phone}
 								onChange={onChange}
 							/>
 							<Button text='인증번호 확인' onClick={onCertified} />
