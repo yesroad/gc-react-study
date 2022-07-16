@@ -2,12 +2,13 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import Input from '../common/Input';
-import useTodo from '../../hook/useTodo';
+import useInput from '../../hook/useInput';
+import Timer from '../Timer';
 
 function Form({ isRegister }) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isCertified, setIsCertified] = useState(false);
-	const [state, onChange] = useTodo();
+	const [state, onChange] = useInput();
 
 	const navigate = useNavigate();
 
@@ -34,7 +35,13 @@ function Form({ isRegister }) {
 	// 회원가입
 	const onRegister = (e) => {
 		e.preventDefault();
+
+		if (!isCertified) {
+			return alert('인증을 완료하세요.');
+		}
+
 		localStorage.setItem('auth', JSON.stringify(state));
+
 		alert('회원가입이 완료되었습니다.');
 		return navigate('/login');
 	};
@@ -56,6 +63,12 @@ function Form({ isRegister }) {
 		return navigate('/');
 	};
 
+	const onSetVisible = (count) => {
+		if (count <= 0) {
+			setIsVisible(false);
+		}
+	};
+
 	return (
 		<form onSubmit={isRegister ? onRegister : onLogin}>
 			<Input title='아이디' name='id' value={state.id} onChange={onChange} />
@@ -71,15 +84,16 @@ function Form({ isRegister }) {
 					isCertified ? (
 						<strong>인증완료</strong>
 					) : (
-						<form onSubmit={onCertified}>
+						<>
 							<Input
 								title='인증번호 입력'
 								name='phone'
 								value={state.phone}
 								onChange={onChange}
 							/>
-							<Button text='인증번호 확인' />
-						</form>
+							<Button text='인증번호 확인' onClick={onCertified} />
+							<Timer onSetVisible={onSetVisible} />
+						</>
 					)
 				) : (
 					<Button text='인증번호 전송' onClick={onVisible} />

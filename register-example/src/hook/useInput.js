@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import { reducer } from './reducer';
 
 const initialState = {
 	id: '',
@@ -6,19 +7,7 @@ const initialState = {
 	phone: '',
 };
 
-function reducer(state, action) {
-	switch (action.type) {
-		case 'CHANGE_INPUT':
-			return {
-				...state,
-				[action.name]: action.value,
-			};
-		default:
-			return state;
-	}
-}
-
-function useTodo() {
+function useInput() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const onChange = (e) => {
@@ -33,4 +22,4 @@ function useTodo() {
 	return [state, onChange];
 }
 
-export default useTodo;
+export default useInput;
