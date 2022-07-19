@@ -1,4 +1,8 @@
 export const initialState = {
+	termsService: '',
+	termsPrivacy: '',
+	termsLocation: '',
+	termsEmail: '',
 	id: '',
 	password: '',
 	passwordConfirm: '',
