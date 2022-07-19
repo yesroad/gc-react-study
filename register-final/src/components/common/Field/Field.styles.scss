@@ -1,4 +1,21 @@
-input{
-  width: 200px;
-  height: 20px;
+.field-box{
+  width: 100%;
+  height: auto;
+  & + .field-box{
+    margin-top: 15px;
+  }
+  strong.title{
+    display: block;    
+    font-size: 16px;
+    color: #1c1c1c;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  span.required{
+    display: block;
+    font-size: 14px;
+    color: #e54848;
+    text-align: right;
+    margin-top: 5px;
+  }
 }

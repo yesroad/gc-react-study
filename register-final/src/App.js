@@ -1,13 +1,16 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Agree, Register } from './pages';
+import './app.css';
 
 function App() {
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route path='/' element={<Agree />} />
-				<Route path='/register' element={<Register />} />
-			</Routes>
+			<div className='wrap'>
+				<Routes>
+					<Route path='/' element={<Agree />} />
+					<Route path='/register' element={<Register />} />
+				</Routes>
+			</div>
 		</BrowserRouter>
 	);
 }
