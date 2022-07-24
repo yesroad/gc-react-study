@@ -13,7 +13,7 @@ function Checkbox({ name, value, label, onChange, isChecked, isDisabled }) {
 				disabled={isDisabled}
 				onChange={onChange}
 			/>
-			<label htmlFor={value}>{label}</label>
+			{label && <label htmlFor={value}>{label}</label>}
 		</div>
 	);
 }

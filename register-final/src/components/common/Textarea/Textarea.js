@@ -1,7 +1,7 @@
 import './Textarea.styles.scss';
 
-function Textarea({ text, isReadOnly }) {
-	return <textarea readOnly={isReadOnly}>{text}</textarea>;
+function Textarea({ value, isReadOnly }) {
+	return <textarea value={value} readOnly={isReadOnly}></textarea>;
 }
 
 export default Textarea;

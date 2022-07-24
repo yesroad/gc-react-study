@@ -1,8 +1,8 @@
 export const initialState = {
-	termsService: '',
-	termsPrivacy: '',
-	termsLocation: '',
-	termsEmail: '',
+	termsService: false,
+	termsPrivacy: false,
+	termsLocation: false,
+	termsEmail: false,
 	id: '',
 	password: '',
 	passwordConfirm: '',
@@ -20,6 +20,19 @@ function InputReducer(state, action) {
 			return {
 				...state,
 				[action.name]: action.value,
+			};
+		case 'CHANGE_CHECKBOX':
+			return {
+				...state,
+				[action.value]: action.checked,
+			};
+		case 'CHANGE_CHECKBOX_ALL':
+			return {
+				...state,
+				termsService: action.checked,
+				termsPrivacy: action.checked,
+				termsLocation: action.checked,
+				termsEmail: action.checked,
 			};
 		default:
 			return state;
