@@ -1,0 +1,17 @@
+.agree-title{
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+.block{
+  & + .block {
+    margin-top: 20px;
+  }
+  textarea, p{
+    margin-top: 10px;
+  }
+}
+.btn-box{
+  margin-top: 10px;
+}

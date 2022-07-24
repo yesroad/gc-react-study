@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { Agree, Register } from './pages';
+import { AgreePage, Register } from './pages';
 import './app.css';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 		<BrowserRouter>
 			<div className='wrap'>
 				<Routes>
-					<Route path='/' element={<Agree />} />
+					<Route path='/' element={<AgreePage />} />
 					<Route path='/register' element={<Register />} />
 				</Routes>
 			</div>
