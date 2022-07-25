@@ -1,44 +1,33 @@
-import { useReducer, useState, useCallback } from 'react';
+import { useReducer, useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Textarea, Checkbox, Button } from '../../common';
 import InputReducer, { initialState } from '../../../reducer/InputReducer';
-import { LOREM_IPSUM, TERMS } from '../../../const/lorem';
+import { LOREM_IPSUM, TERMS } from '../../../constants/lorem';
 import './Agree.styles.scss';
 
 function Agree() {
 	const [state, dispatch] = useReducer(InputReducer, initialState);
-	const [isCheckedArray, setIsCheckedArray] = useState([]);
 	const [isRequired, setIsRequired] = useState(false);
 	const navigater = useNavigate();
 
-	/** 체크박스 단일선택 */
-	const onChecked = useCallback(
-		(e, idx) => {
-			const { value, checked } = e.target;
-			if (checked) {
-				setIsCheckedArray([...isCheckedArray, idx]);
-			} else {
-				setIsCheckedArray((prev) => prev.filter((item) => item !== idx));
-			}
+	useEffect(() => {
+		console.log(state.terms);
+	}, [state]);
 
-			dispatch({
-				type: 'CHANGE_CHECKBOX',
-				value,
-				checked,
-			});
-		},
-		[isCheckedArray],
-	);
+	/** 체크박스 단일선택 */
+	const onChecked = (e) => {
+		const { value, checked } = e.target;
+
+		dispatch({
+			type: 'CHANGE_CHECKBOX',
+			value,
+			checked,
+		});
+	};
 
 	/** 체크박스 전체선택 */
 	const onCheckedAll = (e) => {
 		const { checked } = e.target;
-		if (checked) {
-			setIsCheckedArray(TERMS.map((item) => item.key));
-		} else {
-			setIsCheckedArray([]);
-		}
-
 		dispatch({
 			type: 'CHANGE_CHECKBOX_ALL',
 			checked,
@@ -46,7 +35,7 @@ function Agree() {
 	};
 
 	const onAgreeResult = useCallback(() => {
-		if (!state.termsService || !state.termsPrivacy) {
+		if (!state.terms.termsService || !state.terms.termsPrivacy) {
 			return setIsRequired(true);
 		}
 		setIsRequired(false);
@@ -62,7 +51,7 @@ function Agree() {
 					value='all'
 					label='전체 동의 동의합니다.'
 					onChange={onCheckedAll}
-					isChecked={isCheckedArray.length >= TERMS.length}
+					isChecked={!Object.values(state.terms).includes(false)}
 				/>
 			</div>
 			{TERMS.map((item) => (
@@ -71,8 +60,8 @@ function Agree() {
 						name={item.value}
 						value={item.value}
 						label={item.label}
-						onChange={(e) => onChecked(e, item.key)}
-						isChecked={isCheckedArray.includes(item.key)}
+						onChange={onChecked}
+						isChecked={state.terms[item.value]}
 					/>
 					{item.value === 'termsEmail' ? (
 						<p>{LOREM_IPSUM.substring(0, 150)}</p>
