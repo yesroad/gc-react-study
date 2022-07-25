@@ -2,7 +2,7 @@ import { useReducer, useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Textarea, Checkbox, Button } from '../../common';
 import InputReducer, { initialState } from '../../../reducer/InputReducer';
-import { LOREM_IPSUM, TERMS } from '../../../constants/lorem';
+import { LOREM_IPSUM, TERMS } from '../../../constants/const';
 import './Agree.styles.scss';
 
 function Agree() {

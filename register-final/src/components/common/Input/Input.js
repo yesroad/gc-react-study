@@ -1,6 +1,6 @@
 import './Input.styles.scss';
 
-function Input({ name, value, onChange, type = 'text' }) {
+function Input({ name, value, onChange, placeholder, type = 'text' }) {
 	return (
 		<input
 			className='input'
@@ -8,6 +8,7 @@ function Input({ name, value, onChange, type = 'text' }) {
 			name={name}
 			value={value}
 			onChange={onChange}
+			placeholder={placeholder}
 		/>
 	);
 }
