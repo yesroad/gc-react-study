@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import reducer, { initialState } from '../reducer';
+import reducer, { initialState } from '../reducer/InputReducer';
 
 function useInput() {
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -13,7 +13,7 @@ function useInput() {
 		});
 	};
 
-	return [state.inputs, onChange];
+	return [state, onChange];
 }
 
 export default useInput;
