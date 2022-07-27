@@ -6,6 +6,7 @@ function Input({
 	placeholder,
 	maxLength,
 	minLength,
+	isDisabled,
 	type = 'text',
 }) {
 	return (
@@ -17,6 +18,7 @@ function Input({
 			placeholder={placeholder}
 			maxLength={maxLength}
 			minLength={minLength}
+			disabled={isDisabled}
 		/>
 	);
 }

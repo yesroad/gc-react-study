@@ -1,13 +1,19 @@
 import { Button, Field, Input, Select } from '../../common';
 import { GENDER, MONTH, PHONE } from '../../../constants';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useTimer from '../../../hook/useTimer';
+import './Register.styles.scss';
 
 function Register() {
+	const [time, isTimer, onStart, onStop] = useTimer({ number: 180 });
+	const [isAuthNo, setIsAuthNo] = useState(false);
 	const { state, dispatch } = AuthContext();
 	const { register, handleSubmit, formState, getValues } = useForm();
 	const { isSubmitSuccessful, errors } = formState;
+
+	const random = useRef(Math.floor(Math.random() * 89999) + 10000);
 
 	const onResult = (data) => {
 		const formState = {
@@ -27,11 +33,30 @@ function Register() {
 		});
 	};
 
+	const onAuthNoResult = () => {
+		if (Number(getValues().authNo) === random.current) {
+			setIsAuthNo(true);
+			return onStop();
+		}
+	};
+
+	const onAuthNo = () => {
+		onStart();
+		console.log(random.current);
+		alert(random.current);
+	};
+
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			alert(JSON.stringify(state, null, 2));
 		}
 	}, [isSubmitSuccessful, state]);
+
+	useEffect(() => {
+		if (time.count <= 0) {
+			onStop();
+		}
+	}, [onStop, time]);
 
 	return (
 		<article>
@@ -101,7 +126,7 @@ function Register() {
 				>
 					<Input
 						name='year'
-						placeholder='년'
+						placeholder='년(4자)'
 						maxLength={4}
 						register={register('year', {
 							required: '태어난 년도 4자리를 정확하게 입력하세요.',
@@ -152,6 +177,7 @@ function Register() {
 				>
 					<Input
 						name='email'
+						placeholder='선택입력'
 						register={register('email', {
 							pattern: {
 								value:
@@ -173,6 +199,7 @@ function Register() {
 					/>
 					<Input
 						name='phone02'
+						placeholder='전화번호 입력'
 						register={register('phone02', {
 							required: '필수정보입니다.',
 							pattern: {
@@ -181,7 +208,56 @@ function Register() {
 							},
 						})}
 					/>
-					<Input isDisabled />
+				</Field>
+				<Field isError={errors.authNo} message={errors.authNo?.message}>
+					{!isAuthNo && (
+						<Button
+							type='button'
+							text='인증번호 받기'
+							size='full'
+							onClick={onAuthNo}
+						/>
+					)}
+
+					<Input
+						name='authNo'
+						isDisabled={!isTimer}
+						placeholder='인증번호를 입력하세요'
+						register={register('authNo', {
+							required: '필수정보입니다.',
+							validate: (value) => {
+								console.log(value);
+								console.log(random.current);
+								return (
+									Number(value) === random.current ||
+									'인증번호를 다시 확인해주세요.'
+								);
+							},
+						})}
+					/>
+					{isTimer && (
+						<>
+							<span className='timer'>
+								{time.min} : {time.sec}
+							</span>
+							<span className='authNo'>
+								인증번호를 발송했습니다.(유효시간 3분)
+								<br />
+								인증번호가 오지 않으면 입력하신 정보가 정확한지 확인하여 주세요.
+								<br />
+								이미 가입된 번호이거나, 가상전화번호는 인증번호를 받을 수
+								없습니다.
+								<strong>까먹었으면 콘솔창을 확인하세요.</strong>
+							</span>
+							<Button
+								type='button'
+								text='인증번호 확인'
+								size='full'
+								onClick={onAuthNoResult}
+							/>
+						</>
+					)}
+					{isAuthNo && <span className='authNo'>인증이 완료되었습니다.</span>}
 				</Field>
 				<Button text='확인' size='full' />
 			</form>
