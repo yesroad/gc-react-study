@@ -1,8 +1,8 @@
 import './Select.styles.scss';
 
-function Select({ options, register, onChange, name }) {
+function Select({ options, register, name }) {
 	return (
-		<select name={name} onChange={onChange} {...register}>
+		<select name={name} {...register}>
 			{options?.map((item) => (
 				<option key={item.value} value={item.value}>
 					{item.name}

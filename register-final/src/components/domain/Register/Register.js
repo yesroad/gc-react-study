@@ -52,6 +52,7 @@ function Register() {
 				>
 					<Input
 						name='password'
+						type='password'
 						register={register('password', {
 							required: '필수정보입니다.',
 							pattern: {
@@ -69,11 +70,15 @@ function Register() {
 				>
 					<Input
 						name='passwordConfirm'
+						type='password'
 						register={register('passwordConfirm', {
 							required: '필수정보입니다.',
 							validate: (value) => {
-								return getValues().password === value || "비밀번호가 일치하지 않습니다.";
-							}
+								return (
+									getValues().password === value ||
+									'비밀번호가 일치하지 않습니다.'
+								);
+							},
 						})}
 					/>
 				</Field>
