@@ -33,7 +33,7 @@ function useTimer({number}) {
 					sec: parseInt(time % 60, 10),
 				});
 			}, 1000);
-			return () => clearInterval(counter);;
+			return () => clearInterval(counter);
 		}
 	}, [time, isTimer]);
 

@@ -9,7 +9,6 @@ function RegisterPage() {
 
 	useEffect(() => {
 		if(!state.terms.termsService || !state.terms.termsPrivacy) {
-			alert('약관동의부터 하고오세요.')
 			return navigater('/')
 		}
 	}, [navigater, state])
