@@ -88,6 +88,10 @@ export const PHONE = [
 
 export const GENDER = [
 	{
+		name: '성별',
+		value: '',
+	},	
+	{
 		name: '남자',
 		value: 'man',
 	},
