@@ -1,11 +1,11 @@
 import './Field.styles.scss';
 
-function Field({ children, title, isRequired, requiredMessage }) {
+function Field({ children, title, isError, message }) {
 	return (
 		<div className='field-box'>
 			<strong className='title'>{title}</strong>
 			{children}
-			{isRequired && <span className='required'>{requiredMessage}</span>}
+			{isError && <span className='required'>{message}</span>}
 		</div>
 	);
 }

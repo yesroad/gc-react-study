@@ -1,12 +1,12 @@
-import { useReducer, useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Textarea, Checkbox, Button } from '../../common';
-import InputReducer, { initialState } from '../../../reducer/InputReducer';
-import { LOREM_IPSUM, TERMS } from '../../../constants/const';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import { LOREM_IPSUM, TERMS } from '../../../constants';
 import './Agree.styles.scss';
 
 function Agree() {
-	const [state, dispatch] = useReducer(InputReducer, initialState);
+	const { state, dispatch } = AuthContext();
 	const [isRequired, setIsRequired] = useState(false);
 	const navigater = useNavigate();
 
@@ -41,6 +41,10 @@ function Agree() {
 		setIsRequired(false);
 		navigater('/register');
 	}, [navigater, state]);
+
+	const onResult = () => {
+		dispatch({ type: 'RESET_FORM' });
+	};
 
 	return (
 		<article>
@@ -77,7 +81,7 @@ function Agree() {
 			)}
 
 			<div className='btn-box'>
-				<Button text='취소' size='half' />
+				<Button text='취소' size='half' onClick={onResult} />
 				<Button type='button' text='확인' size='half' onClick={onAgreeResult} />
 			</div>
 		</article>

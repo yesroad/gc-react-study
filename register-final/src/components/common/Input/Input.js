@@ -7,6 +7,8 @@ function Input({
 	id,
 	onChange,
 	placeholder,
+	maxLength,
+	minLength,
 	type = 'text',
 }) {
 	return (
@@ -19,6 +21,8 @@ function Input({
 			value={value}
 			onChange={onChange}
 			placeholder={placeholder}
+			maxLength={maxLength}
+			minLength={minLength}
 		/>
 	);
 }

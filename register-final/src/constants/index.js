@@ -25,17 +25,78 @@ export const TERMS = [
 ];
 
 export const MONTH = [
-	'월',
-	'1',
-	'2',
-	'3',
-	'4',
-	'5',
-	'6',
-	'7',
-	'8',
-	'9',
-	'10',
-	'11',
-	'12',
+	{
+		name: '월',
+		value: '',
+	},
+	{
+		name: '1',
+		value: '1',
+	},
+	{
+		name: '2',
+		value: '2',
+	},
+	{
+		name: '3',
+		value: '3',
+	},
+	{
+		name: '4',
+		value: '4',
+	},
+	{
+		name: '5',
+		value: '5',
+	},
+	{
+		name: '6',
+		value: '6',
+	},
+	{
+		name: '7',
+		value: '7',
+	},
+	{
+		name: '8',
+		value: '8',
+	},
+	{
+		name: '9',
+		value: '9',
+	},
+	{
+		name: '10',
+		value: '10',
+	},
+	{
+		name: '11',
+		value: '11',
+	},
+	{
+		name: '12',
+		value: '12',
+	},
+];
+
+export const PHONE = [
+	{
+		name: '대한민국 + 82',
+		value: '010',
+	},
+];
+
+export const GENDER = [
+	{
+		name: '남자',
+		value: 'man',
+	},
+	{
+		name: '여자',
+		value: 'woman',
+	},
+	{
+		name: '선택안함',
+		value: 'other',
+	},
 ];
